@@ -1,7 +1,11 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-}
+const withAntdLess = require("next-plugin-antd-less");
 
-module.exports = nextConfig
+module.exports = withAntdLess({
+  modifyVars: { "@primary-color": "#3417af" },
+
+  reactStrictMode: true,
+
+  webpack(config) {
+    return config;
+  },
+});
