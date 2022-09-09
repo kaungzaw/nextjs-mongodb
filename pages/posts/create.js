@@ -48,7 +48,7 @@ const CreatePost = ({ user }) => {
           if (data2) {
             cache.writeQuery({
               query: GET_POSTS,
-              data: { posts: data2.posts.concat([createPost]) },
+              data: { posts: [createPost, ...data2.posts] },
             });
           }
         },
