@@ -1,4 +1,4 @@
-import { Card, Avatar, Dropdown, Menu, Modal, message } from "antd";
+import { Card, Avatar, Dropdown, Menu, Modal, Typography, message } from "antd";
 import {
   UserOutlined,
   LikeOutlined,
@@ -12,7 +12,9 @@ import { LIKE_POST, DISLIKE_POST, DELETE_POST } from "graphql/gqls/post";
 import Link from "next/link";
 import styles from "./Post.module.css";
 
-export default function Post({ post, edit = false }) {
+const { Text } = Typography;
+
+export default function Post({ post, edit = false, user }) {
   const apolloClient = useApolloClient();
 
   const [deletePost] = useMutation(DELETE_POST);
@@ -80,18 +82,33 @@ export default function Post({ post, edit = false }) {
     <Card
       size="small"
       actions={[
-        <div key="like" onClick={() => handleAction("like")}>
+        <Text
+          key="like"
+          onClick={() => user && handleAction("like")}
+          disabled={!user}
+          className={styles.action}
+        >
           {post.like}&nbsp;&nbsp;
           <LikeOutlined />
-        </div>,
-        <div key="dislike" onClick={() => handleAction("dislike")}>
+        </Text>,
+        <Text
+          key="dislike"
+          onClick={() => user && handleAction("dislike")}
+          disabled={!user}
+          className={styles.action}
+        >
           {post.dislike}&nbsp;&nbsp;
           <DislikeOutlined />
-        </div>,
-        <div key="comment" onClick={() => handleAction("comment")}>
+        </Text>,
+        <Text
+          key="comment"
+          onClick={() => handleAction("comment")}
+          disabled={!user}
+          className={styles.action}
+        >
           0&nbsp;&nbsp;
           <CommentOutlined />
-        </div>,
+        </Text>,
         ...(edit
           ? [
               <Dropdown key="edit" overlay={dropdownMenu} trigger={["click"]}>

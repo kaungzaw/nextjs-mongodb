@@ -1,9 +1,17 @@
 import { useQuery } from "@apollo/client";
+import { getSession } from "@auth0/nextjs-auth0";
 import { GET_POSTS } from "graphql/gqls/post";
 import clientOnly from "utils/clientOnly";
 import Post from "components/Post";
 
-function Home() {
+export const getServerSideProps = async ({ req, res }) => {
+  const { user = null } = getSession(req, res) ?? {};
+  return {
+    props: { user },
+  };
+};
+
+function Home({ user }) {
   const { data: { posts = [] } = {}, loading, error } = useQuery(GET_POSTS);
 
   return (
@@ -20,7 +28,7 @@ function Home() {
             key={item._id}
             style={index < posts.length - 1 ? { marginBottom: "20px" } : {}}
           >
-            <Post post={item} />
+            <Post post={item} user={user} />
           </div>
         ))
       )}

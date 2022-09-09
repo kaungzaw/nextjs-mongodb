@@ -39,7 +39,7 @@ const Posts = ({ user }) => {
             key={item._id}
             style={index < posts.length - 1 ? { marginBottom: "20px" } : {}}
           >
-            <Post post={item} edit={true} />
+            <Post post={item} edit={true} user={user} />
           </div>
         ))
       )}
