@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useQuery } from "@apollo/client";
 import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
 import { GET_POSTS } from "graphql/gqls/post";
@@ -27,6 +28,9 @@ const Posts = ({ user }) => {
 
   return (
     <>
+      <Head>
+        <title>SNS - My Posts</title>
+      </Head>
       {loading ? (
         <div>Loading...</div>
       ) : error ? (

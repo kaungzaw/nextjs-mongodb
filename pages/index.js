@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useQuery } from "@apollo/client";
 import { getSession } from "@auth0/nextjs-auth0";
 import { GET_POSTS } from "graphql/gqls/post";
@@ -16,6 +17,9 @@ function Home({ user }) {
 
   return (
     <>
+      <Head>
+        <title>SNS - Home</title>
+      </Head>
       {loading ? (
         <div>loading...</div>
       ) : error ? (
