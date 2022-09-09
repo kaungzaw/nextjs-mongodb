@@ -38,7 +38,7 @@ const CreatePost = ({ user }) => {
               variables: {
                 filter: { createdBy: email },
               },
-              data: { posts: data.posts.concat([createPost]) },
+              data: { posts: [createPost, ...data.posts] },
             });
           }
 
