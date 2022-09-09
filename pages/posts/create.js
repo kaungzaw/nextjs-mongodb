@@ -2,7 +2,7 @@ import Head from "next/head";
 import { Form, Input, Button, message } from "antd";
 import { useMutation } from "@apollo/client";
 import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
-import { CREATE_POST } from "graphql/gqls/post";
+import { CREATE_POST, GET_POSTS } from "graphql/gqls/post";
 
 export const getServerSideProps = withPageAuthRequired({
   getServerSideProps: async ({ req, res }) => {
@@ -26,7 +26,7 @@ const CreatePost = ({ user }) => {
         update(cache, { data: { createPost } }) {
           // /posts/index
           const data = cache.readQuery({
-            query: getPosts,
+            query: GET_POSTS,
             variables: {
               filter: { createdBy: email },
             },
@@ -34,7 +34,7 @@ const CreatePost = ({ user }) => {
 
           if (data) {
             cache.writeQuery({
-              query: getPosts,
+              query: GET_POSTS,
               variables: {
                 filter: { createdBy: email },
               },
@@ -43,11 +43,11 @@ const CreatePost = ({ user }) => {
           }
 
           // /
-          const data2 = cache.readQuery({ query: getPosts });
+          const data2 = cache.readQuery({ query: GET_POSTS });
 
           if (data2) {
             cache.writeQuery({
-              query: getPosts,
+              query: GET_POSTS,
               data: { posts: data2.posts.concat([createPost]) },
             });
           }
